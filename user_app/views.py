@@ -8,16 +8,13 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.db import transaction
 from django.contrib.auth.models import User
+from blog_app.models import Blog
 from .serializers import UserSerializer
 import logging
 logger = logging.getLogger(__name__)
 from blog_application_system import ins_logger
 from sys import exc_info
 
-{
-    "email":"user1@test.com",
-    "password":"test@123"
-}
 
 class userLogin(APIView):
     def post(self, request):
@@ -48,34 +45,18 @@ class userLogout(APIView):
     def get(self, request):
         logout(request)
         return Response({'detail': 'Success'}, status=status.HTTP_200_OK)
-{
-    "email":"user1@test.com",
-    "password":"test@123",
-    "first_name":"user",
-    "last_name":"1"
-}
+
 class userSignUp(APIView):
     def post(self, request):
         try:
-            # import pdb;pdb.set_trace()
+            import pdb;pdb.set_trace()
             with transaction.atomic():
                 user_serializer = UserSerializer(data=request.data)
                 
                 if user_serializer.is_valid():
-                    username = request.data.get('email')
-                    user = User.objects.create_user(
-                        username=username,
-                        email=request.data.get('email'),
-                        password=request.data.get('password'),
-                        first_name=request.data.get('first_name'),
-                        last_name=request.data.get('last_name')
-                    )
+                    user_serializer.save()
 
-                    user_details = {
-                        'username': user.username,
-                        'email': user.email
-                    }
-                    return Response({"success":True, 'userdetails': user_details}, status=status.HTTP_200_OK)
+                    return Response({"success":True, 'userdetails': user_serializer.data}, status=status.HTTP_200_OK)
                 return Response({"success":False, 'details': user_serializer.errors}, status=status.HTTP_200_OK)
         except Exception as e:
             # logging the specific error into log/error.log file
@@ -102,9 +83,11 @@ class userApi(APIView):
         
     def delete(self, request):
         try:
-            id = request.data
-            User.objects.filter(id = id).delete()
-            return Response({"success":True}, status = status.HTTP_200_OK)
+            with transaction.atomic():
+                Blog.objects.filter(author = request.user).delete()
+                User.objects.filter(id = request.user.id).delete()
+                logout(request)
+                return Response({"success":True, "details": "Successfully deleted the user and the blogs authored by the user."}, status = status.HTTP_200_OK)
         except Exception as e:
             # logging the specific error into log/error.log file
             exc_type, exc_value, exc_traceback = exc_info()
@@ -113,8 +96,7 @@ class userApi(APIView):
         
     def put(self, request):
         try:
-            user_id = request.data.get('id')
-            user_instance = User.objects.get(id=user_id)
+            user_instance = User.objects.get(id=request.user.id)
             
             user_serializer = UserSerializer(instance=user_instance, data=request.data, partial=True)
             if user_serializer.is_valid():

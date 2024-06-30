@@ -38,10 +38,6 @@ class ListBlogsAPI(APIView):
             ins_logger.logger.error(str(e), extra={'details':'line no: ' + str(exc_traceback.tb_lineno)})
             return Response({"details":str(e),"success":False}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-{
-    "title": "Blog 1", 
-    "content": "asnf fskdfjnskf fksdfnsd ssdsdgn g ggnsnglskdnglskdg sg sldgsng"
-}
 class BlogsAPI(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
