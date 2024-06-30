@@ -11,7 +11,7 @@ This repository contains a Django-based blog application system with JWT authent
 ### Installation
 Clone the repository:
 ```
-git clone https://github.com/yourusername/blog_application_system.git
+git clone https://github.com/varshamohan08/blog_application_system.git
 ```
 Navigate to the project directory:
 ```
