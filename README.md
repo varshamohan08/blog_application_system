@@ -27,7 +27,7 @@ python manage.py runserver
 ```
 ### Dockerization
 To run the application using Docker, follow these steps:
-\n
+
 Build the Docker image:
 ```
 docker build -t blog_app .
