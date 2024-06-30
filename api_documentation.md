@@ -10,20 +10,8 @@
 
 ``` json[]
 {
-    "email": "user1@test.com",
+    "email": "user4@test.com",
     "password": "test@123"
-}
-```
-Sample Output:
-``` json[]
-{
-    "success": true,
-    "details": "Success",
-    "access_token": "xxx",
-    "userdetails": {
-        "username": "xxx",
-        "email": "xxx"
-    }
 }
 ```
 Logout
