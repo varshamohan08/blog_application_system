@@ -14,7 +14,7 @@
     "password": "test@123"
 }
 ```
-Logout
+#### Logout
 - URL: http://127.0.0.1:8000/logout
 - Method: POST
 
