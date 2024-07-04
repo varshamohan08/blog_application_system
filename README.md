@@ -46,4 +46,4 @@ Pagination for the blog list is handled by the BlogPagination class, which sets 
 JWT authentication is used to secure the endpoints. Ensure to include the JWT token in the Authorization header as Bearer <token>.
 
 ### API Endpoints
-The detailed description of the API endpoints can be found in the [api_documentation.md](https://github.com/varshamohan08/blog_application_system-/blob/52d9a84872c926e29849fb6c7e69d19b244f4f3f/api_documentation.md) file.
+The detailed description of the API endpoints can be found in the [api_documentation.md](api_documentation.md) file.
